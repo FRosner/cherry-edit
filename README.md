@@ -2,7 +2,7 @@
 
 ## Description
 
-Code Kata implementing a collaborative text editor based on replicated growable arrays (RGA) [1]. An RGA is an ordered sequence conflict-free replicated data type (CRDT). The implementation is based on the explanations given on a [conference talk](https://www.youtube.com/watch?v=yCcWpzY8dIA) about the work on nested CRDTs, specifically a conflict-free replicated JSON data type [2]. 
+Coding exercise implementing a collaborative text editor based on replicated growable arrays (RGA) [1]. An RGA is an ordered sequence conflict-free replicated data type (CRDT). The implementation is based on the explanations given on a [conference talk](https://www.youtube.com/watch?v=yCcWpzY8dIA) about the work on nested CRDTs, specifically a conflict-free replicated JSON data type [2]. 
 
 ## Known Issues
 
