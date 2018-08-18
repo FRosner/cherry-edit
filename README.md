@@ -1,4 +1,4 @@
-# Cherry Edit
+# Cherry Edit 🍒
 
 ## Description
 
