@@ -5,12 +5,13 @@ import java.util.UUID
 import akka.actor.{Actor, ActorRef}
 import akka.event.{Logging, LoggingAdapter}
 
-// TODO look up server with Akka cluster later (https://doc.akka.io/docs/akka/1.3.1/scala/tutorial-chat-server.html)
-class Client(server: ActorRef) extends Actor {
+// TODO look up server with Akka cluster later (http://blog.madhukaraphatak.com/simple-akka-remote-example/)
+class Client(serverPath: String) extends Actor {
 
   val id: String = self.path.name
   val log: LoggingAdapter = Logging(context.system, this)
   private var document: Option[Document] = None
+  private val server = context.actorSelection(serverPath)
 
   server ! RegisterClient
 
