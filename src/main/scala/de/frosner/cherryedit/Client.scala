@@ -17,11 +17,16 @@ class Client(server: ActorRef) extends Actor {
   def receive: PartialFunction[Any, Unit] = {
     case msg @ InsertAfterLocal(char, pos) =>
       log.info(s"Before $msg: ${document.map(_.toPrintableString).getOrElse("")}")
-      document = document.map { doc =>
-        val (oldChar, newDoc) = doc.insertAfter(pos, char, id)
-        val newPos = pos + 1
-        server ! InsertAfterRemote(newDoc.characters(newPos), oldChar.identifier)
-        newDoc
+      if (document.isEmpty) {
+        sender() ! ClientNotInitialized
+      } else {
+        document = document.map { doc =>
+          val (oldChar, newDoc) = doc.insertAfter(pos, char, id)
+          val newPos = pos + 1
+          server ! InsertAfterRemote(newDoc.characters(newPos), oldChar.identifier)
+          newDoc
+        }
+        sender() ! InsertAfterLocalSuccess
       }
       log.info(s"After $msg: ${document.map(_.toPrintableString).getOrElse("")}")
     case msg @ InsertAfterRemote(char, identifier) =>

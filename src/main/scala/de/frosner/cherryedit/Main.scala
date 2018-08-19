@@ -1,8 +1,10 @@
 package de.frosner.cherryedit
 
-import java.util.UUID
-
 import akka.actor.{ActorSystem, Props}
+import akka.pattern.ask
+
+import scala.concurrent.Await
+import scala.concurrent.duration._
 
 object Main extends App {
 
@@ -13,6 +15,10 @@ object Main extends App {
   val client1 = system.actorOf(Props(classOf[Client], server), "a")
   val client2 = system.actorOf(Props(classOf[Client], server), "b")
 
+  Await.result((client1 ? InsertAfterLocal("a", 0))(5.seconds), 5.seconds) match {
+    case InsertAfterLocalSuccess => println("Insert successful!")
+    case ClientNotInitialized    => println("Client not initialized!")
+  }
   Thread.sleep(1000)
   client1 ! InsertAfterLocal("a", 0)
   client1 ! InsertAfterLocal("b", 1)
