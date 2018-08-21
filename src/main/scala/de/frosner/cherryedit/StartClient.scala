@@ -22,4 +22,7 @@ object StartClient extends App {
   client1 ! InsertAfterLocal("b", 1)
   client2 ! InsertAfterLocal("x", 0)
 
+  Thread.sleep(1000)
+  client2 ! DeleteLocal(2)
+
 }

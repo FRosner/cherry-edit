@@ -22,6 +22,7 @@ class Server(initialDocument: Document) extends Actor {
       log.info(s"After $msg: ${document.toPrintableString}")
     case msg @ DeleteRemote(identifier) =>
       log.info(s"Before $msg: ${document.toPrintableString}")
+      clients.filter(_ != sender()).foreach(_ ! msg)
       log.info(s"After $msg: ${document.toPrintableString}")
     case unknown => log.info(s"Received unknown message: $unknown")
   }

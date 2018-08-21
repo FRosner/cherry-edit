@@ -36,9 +36,20 @@ class Client(serverPath: String) extends Actor {
       log.info(s"After $msg: ${document.map(_.toPrintableString).getOrElse("")}")
     case msg @ DeleteRemote(identifier) =>
       log.info(s"Before $msg: ${document.map(_.toPrintableString).getOrElse("")}")
+      document = document.map(_.delete(identifier))
       log.info(s"After $msg: ${document.map(_.toPrintableString).getOrElse("")}")
     case msg @ DeleteLocal(pos) =>
       log.info(s"Before $msg: ${document.map(_.toPrintableString).getOrElse("")}")
+      if (document.isEmpty) {
+        sender() ! ClientNotInitialized
+      } else {
+        document = document.map { doc =>
+          val (deletedChar, newDoc) = doc.deleteAt(pos)
+          server ! DeleteRemote(deletedChar.identifier)
+          newDoc
+        }
+        sender() ! DeleteLocalSuccess
+      }
       log.info(s"After $msg: ${document.map(_.toPrintableString).getOrElse("")}")
     case msg @ SetDocument(newDocument) =>
       log.info(s"Before $msg: ${document.map(_.toPrintableString).getOrElse("")}")

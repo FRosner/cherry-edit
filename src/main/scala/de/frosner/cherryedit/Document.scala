@@ -31,6 +31,18 @@ case class Document(characters: Vector[Character], highestIdentifierNumber: Int)
     }
   }
 
+  def deleteAt(pos: Int): (Character, Document) = {
+    val toDelete = characters(pos)
+    val deletedChar = toDelete.copy(value = Tombstone)
+    val newDocument = this.copy(characters = characters.updated(pos, deletedChar))
+    (deletedChar, newDocument)
+  }
+
+  def delete(identifier: Identifier): Document = {
+    val index = characters.indexWhere(_.identifier == identifier)
+    this.copy(characters = characters.updated(index, characters(index).copy(value = Tombstone)))
+  }
+
   def toPrintableString: String = characters.map(_.toPrintableString).mkString("")
 
 }
