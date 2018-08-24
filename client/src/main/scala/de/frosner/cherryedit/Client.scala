@@ -30,14 +30,17 @@ class Client(serverPath: String) extends Actor {
         sender() ! InsertAfterLocalSuccess
       }
       log.info(s"After $msg: ${document.map(_.toPrintableString).getOrElse("")}")
+      show()
     case msg @ InsertAfterRemote(char, identifier) =>
       log.info(s"Before $msg: ${document.map(_.toPrintableString).getOrElse("")}")
       document = document.map(_.insertAfter(identifier, char))
       log.info(s"After $msg: ${document.map(_.toPrintableString).getOrElse("")}")
+      show()
     case msg @ DeleteRemote(identifier) =>
       log.info(s"Before $msg: ${document.map(_.toPrintableString).getOrElse("")}")
       document = document.map(_.delete(identifier))
       log.info(s"After $msg: ${document.map(_.toPrintableString).getOrElse("")}")
+      show()
     case msg @ DeleteLocal(pos) =>
       log.info(s"Before $msg: ${document.map(_.toPrintableString).getOrElse("")}")
       if (document.isEmpty) {
@@ -51,11 +54,18 @@ class Client(serverPath: String) extends Actor {
         sender() ! DeleteLocalSuccess
       }
       log.info(s"After $msg: ${document.map(_.toPrintableString).getOrElse("")}")
+      show()
     case msg @ SetDocument(newDocument) =>
       log.info(s"Before $msg: ${document.map(_.toPrintableString).getOrElse("")}")
       document = Some(newDocument)
       log.info(s"After $msg: ${document.map(_.toPrintableString).getOrElse("")}")
+      show()
     case unknown => log.info(s"Received unknown message: $unknown")
+  }
+
+  def show(): Unit = {
+    Runtime.getRuntime.exec("clear")
+    println(document.map(_.toPrintableString).getOrElse("Connecting..."))
   }
 
 }
