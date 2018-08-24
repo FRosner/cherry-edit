@@ -1,6 +1,6 @@
 package de.frosner.cherryedit.client
 
-import akka.actor.Actor
+import akka.actor.{Actor, ActorRef}
 import akka.event.{Logging, LoggingAdapter}
 import de.frosner.cherryedit.core._
 
@@ -11,6 +11,7 @@ class Client(serverPath: String) extends Actor {
   val log: LoggingAdapter = Logging(context.system, this)
   private var document: Option[Document] = None
   private val server = context.actorSelection(serverPath)
+  private var ui: Option[ActorRef] = None
 
   server ! RegisterClient
 
@@ -59,12 +60,15 @@ class Client(serverPath: String) extends Actor {
       document = Some(newDocument)
       log.info(s"After $msg: ${document.map(_.toPrintableString).getOrElse("")}")
       show()
-    case unknown => log.info(s"Received unknown message: $unknown")
+    case RegisterUI => ui = Some(sender())
+    case unknown    => log.info(s"Received unknown message: $unknown")
   }
 
-  def show(): Unit = {
-    Runtime.getRuntime.exec("clear")
-    println(document.map(_.toPrintableString).getOrElse("Connecting..."))
-  }
+  private def show(): Unit =
+    document.foreach(doc =>
+      ui match {
+        case Some(ref) => ref ! PrintDocument(doc)
+        case None      => log.error("No UI registered!")
+    })
 
 }

@@ -13,3 +13,6 @@ case object RegisterClient
 case object ClientInitialized
 case object ClientNotInitialized
 case class SetDocument(document: Document)
+
+case class PrintDocument(document: Document)
+case object RegisterUI
