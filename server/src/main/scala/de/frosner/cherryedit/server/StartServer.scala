@@ -1,6 +1,7 @@
-package de.frosner.cherryedit
+package de.frosner.cherryedit.server
 
 import akka.actor.{ActorSystem, Props}
+import de.frosner.cherryedit.core.Document
 
 object StartServer extends App {
 

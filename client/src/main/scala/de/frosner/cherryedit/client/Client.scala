@@ -1,7 +1,8 @@
-package de.frosner.cherryedit
+package de.frosner.cherryedit.client
 
 import akka.actor.Actor
 import akka.event.{Logging, LoggingAdapter}
+import de.frosner.cherryedit.core._
 
 // TODO look up server with Akka cluster later (http://blog.madhukaraphatak.com/simple-akka-remote-example/)
 class Client(serverPath: String) extends Actor {

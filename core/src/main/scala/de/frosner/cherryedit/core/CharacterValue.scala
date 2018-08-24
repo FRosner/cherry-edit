@@ -1,4 +1,4 @@
-package de.frosner.cherryedit
+package de.frosner.cherryedit.core
 
 sealed trait CharacterValue
 

@@ -1,7 +1,8 @@
-package de.frosner.cherryedit
+package de.frosner.cherryedit.server
 
 import akka.actor.{Actor, ActorRef}
 import akka.event.{Logging, LoggingAdapter}
+import de.frosner.cherryedit.core._
 
 class Server(initialDocument: Document) extends Actor {
 

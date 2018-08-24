@@ -1,6 +1,7 @@
-package de.frosner.cherryedit
+package de.frosner.cherryedit.client
 
 import akka.actor.{ActorSystem, Props}
+import de.frosner.cherryedit.core.{DeleteLocal, InsertAfterLocal}
 
 object StartClient extends App {
 

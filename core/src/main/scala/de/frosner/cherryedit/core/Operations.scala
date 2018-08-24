@@ -1,4 +1,4 @@
-package de.frosner.cherryedit
+package de.frosner.cherryedit.core
 
 case class InsertAfterLocal(char: String, pos: Int)
 case object InsertAfterLocalSuccess

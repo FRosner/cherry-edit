@@ -1,4 +1,4 @@
-package de.frosner.cherryedit
+package de.frosner.cherryedit.core
 
 import org.scalatest._
 
