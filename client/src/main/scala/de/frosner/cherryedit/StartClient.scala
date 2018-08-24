@@ -1,7 +1,5 @@
 package de.frosner.cherryedit
 
-import java.io.File
-
 import akka.actor.{ActorSystem, Props}
 
 object StartClient extends App {

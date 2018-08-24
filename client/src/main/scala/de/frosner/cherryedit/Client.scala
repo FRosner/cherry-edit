@@ -1,8 +1,6 @@
 package de.frosner.cherryedit
 
-import java.util.UUID
-
-import akka.actor.{Actor, ActorRef}
+import akka.actor.Actor
 import akka.event.{Logging, LoggingAdapter}
 
 // TODO look up server with Akka cluster later (http://blog.madhukaraphatak.com/simple-akka-remote-example/)
