@@ -1,10 +1,13 @@
 enablePlugins(JavaAppPackaging)
+enablePlugins(GitVersioning)
 
 lazy val projectName = "cherry-edit"
 
-version := "0.1"
+organization in ThisBuild := "de.frosner"
 
-scalaVersion := "2.12.4"
+scalaVersion in ThisBuild := "2.12.4"
+
+scalacOptions in ThisBuild := ScalacOptions.options
 
 lazy val core = project
   .in(file("core"))
@@ -19,6 +22,8 @@ lazy val server = project
     name := projectName + "-server",
     libraryDependencies ++= Dependencies.akka
   ).dependsOn(core)
+  .enablePlugins(JavaAppPackaging)
+
 
 lazy val client = project
   .in(file("client"))
@@ -26,4 +31,8 @@ lazy val client = project
     name := projectName + "-client",
     libraryDependencies ++= Dependencies.akka
   ).dependsOn(core)
+  .enablePlugins(JavaAppPackaging)
 
+lazy val root = project
+  .in(file("."))
+  .aggregate(client, server)
