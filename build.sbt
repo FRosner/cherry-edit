@@ -35,4 +35,4 @@ lazy val client = project
 
 lazy val root = project
   .in(file("."))
-  .aggregate(client, server)
+  .aggregate(client, server, core)
